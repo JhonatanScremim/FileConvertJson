@@ -44,6 +44,7 @@ public class Writer implements Runnable{
 	public void run() {
 
 		System.out.println("Escrevendo " + getHora());
+		long start = System.currentTimeMillis();
 		do {
 			
 			String tarefa = ControllerQueue.getTarefaEscrever();
@@ -67,5 +68,8 @@ public class Writer implements Runnable{
 		
 		ControllerQueue.FinalizarTudo();
 		System.out.println("Escrita finalizada " + getHora());
+		long finish = System.currentTimeMillis();
+		System.out.printf("Tempo de escrição: " + "%.3f ms%n", (finish - start) / 1000d);
+
 	}
 }

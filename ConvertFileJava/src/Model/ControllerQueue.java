@@ -89,6 +89,7 @@ public class ControllerQueue implements Runnable{
 	}
 	private void ReceberDados() {
 		System.out.println("Começar leitura " + getHora());
+		long start = System.currentTimeMillis();
 		int quantTotalRegistro = ArquivoString.size();
 		int quantRegistros = 0;
 		do {
@@ -97,6 +98,9 @@ public class ControllerQueue implements Runnable{
 		}while(quantRegistros < quantTotalRegistro );
 		FinalizarLeitura = false;
 		System.out.println("Leitura finalizada " + getHora());
+		long finish = System.currentTimeMillis();
+		System.out.printf("Tempo de leitura: " + "%.3f ms%n", (finish - start) / 1000d);
+
 	}
 	
 	@Override

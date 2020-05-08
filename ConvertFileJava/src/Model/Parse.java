@@ -22,6 +22,7 @@ public class Parse implements Runnable{
 	@Override
 	public void run() {
 		System.out.println("Começar conversão " + getHora());
+		long start = System.currentTimeMillis();
 		do {
 			String[] tarefa = ControllerQueue.getTarefa();
 			if (tarefa != null) {
@@ -37,6 +38,9 @@ public class Parse implements Runnable{
 		ControllerQueue.setFinalizarConvert(false);
 		
 		System.out.println("Conversão finalizada " + getHora());
+		long finish = System.currentTimeMillis();
+		System.out.printf("Tempo de conversão: " + "%.3f ms%n", (finish - start) / 1000d);
+		
 	}
 	
 	private String getHora() {
