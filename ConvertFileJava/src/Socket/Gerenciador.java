@@ -69,8 +69,6 @@ public class Gerenciador extends Thread {
 			e.printStackTrace();
 		}
 		
-		
-		
 	}
 	public String getNomeCliente() {
 		return nomeCliente;

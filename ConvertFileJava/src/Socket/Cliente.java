@@ -6,7 +6,6 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.net.UnknownHostException;
-import java.util.concurrent.ExecutorService;
 
 import application.Main;
 import javafx.fxml.FXML;
@@ -14,12 +13,8 @@ import application.ControllerMain;
 
 public class Cliente {
 	
-	
-	
-	
 	public static void main(String[] args) {
-		
-	    
+		    
 		try {
 			final Socket cliente = new Socket("127.0.0.1",9999);
 			//lendo mensagem do servidor
@@ -37,7 +32,7 @@ public class Cliente {
 						BufferedReader leitor =new BufferedReader(new InputStreamReader(cliente.getInputStream()));
 						while(true) {
 							String msg = leitor.readLine();
-							System.out.println("O servidor disse: " + msg);
+							System.out.println("Servidor: " + msg);
 						}
 					} catch (IOException e) {
 						System.out.println("Impossovel ler a mansagem do servidor");
