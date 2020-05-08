@@ -1,6 +1,5 @@
 package application;
 
-import java.awt.TextArea;
 import java.io.BufferedReader;
 
 import java.io.File;
@@ -11,7 +10,9 @@ import java.io.IOException;
 import java.io.Reader;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -33,6 +34,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ProgressBar;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.FileChooser;
@@ -59,6 +61,9 @@ public class ControllerMain {
 
 	    @FXML
 	    private ProgressBar ProgressBarConvert;
+	    
+	    @FXML
+	    private ProgressBar ProgressBarWrite;
 
 	    @FXML
 	    private Button BtConvert;
@@ -142,12 +147,12 @@ public class ControllerMain {
 	    		CSVReader csvReader = new CSVReaderBuilder(reader).withSkipLines(1).build();
 	    		
 	    		List<String[]> lines = csvReader.readAll();
-	    		ProgressBarConvert.setProgress(-1);
 
-	    		ProgressBarConvert.progressProperty().bind(task.progressProperty());
-	    		new Thread(task).start();
+	    		
 	    	    Exec.execute(new ControllerQueue(lines, ProgressBarConvert));
 	    	    Exec.execute(new Parse());
+	    	    ProgressBarConvert.progressProperty().bind(task.progressProperty());
+	    		new Thread(task).start();
 	    	    Exec.execute(new Writer(new FileWriter(TxtExit.getText() + "\\arquivo.json")));
 	    	    
 	    		
@@ -155,20 +160,20 @@ public class ControllerMain {
 				e.printStackTrace();
 			}
 	    }
+	    private String getHora() {
+			return new SimpleDateFormat("HH:mm:ss.SSS z").format(new Date(System.currentTimeMillis()));
+		}
 	    Task task = new Task<Void>() {
 			@Override
 			public Void call() {
 				final int max = 100000000;
-				int centena = 0;
 				for (int i = 1; i <= max; i++) {
 					if (isCancelled()) {
 						break;
 					}
 					updateProgress(i, max);
 
-					if (i % 100 == 0) {
-						updateMessage("Processados: " + ++centena);
-					}
+					
 				}
 				return null;
 			}
@@ -182,10 +187,13 @@ public class ControllerMain {
 	    
 	    public Boolean SalvarArquivo(String conteudo, String NomeArquivo) {
 	    	try {
+	    		TxtArea.appendText("Começar a salvar");
 	    		FileWriter escrever = new FileWriter(NomeArquivo);
 	    		escrever.write(conteudo);
 	    		escrever.close();
+	    		TxtArea.appendText("Salvado com sucesso " + getHora());
 	    		return true;
+	    		
 	    	} catch (IOException e) {
 	    		Alert error = new Alert(Alert.AlertType.ERROR);
 	            error.setHeaderText("Erro");

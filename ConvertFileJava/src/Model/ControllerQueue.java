@@ -27,7 +27,7 @@ public class ControllerQueue implements Runnable{
 	public static void FinalizarTudo() {
 		Platform.runLater(new Runnable() {
             @Override public void run() {
-            	ProgressBarConvert.setProgress(100);	
+            	
             }
         });
 	}

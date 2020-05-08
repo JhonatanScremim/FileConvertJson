@@ -10,13 +10,16 @@
 <AnchorPane prefHeight="600.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.ControllerMain">
    <children>
       <Button fx:id="BtCsv" layoutX="342.0" layoutY="100.0" mnemonicParsing="false" onAction="#Iniciar" text="Buscar" />
-      <Button fx:id="BtExit" layoutX="342.0" layoutY="213.0" mnemonicParsing="false" onAction="#Iniciar" text="Buscar" />
+      <Button fx:id="BtExit" layoutX="342.0" layoutY="171.0" mnemonicParsing="false" onAction="#Iniciar" text="Buscar" />
       <TextField fx:id="TxtCsv" layoutX="67.0" layoutY="100.0" prefHeight="25.0" prefWidth="230.0" />
-      <TextField fx:id="TxtExit" layoutX="67.0" layoutY="213.0" prefHeight="25.0" prefWidth="230.0" />
-      <Button fx:id="BtConvert" layoutX="67.0" layoutY="275.0" mnemonicParsing="false" onAction="#Iniciar" text="Converter" />
-      <ProgressBar fx:id="ProgressBarConvert" layoutX="169.0" layoutY="272.0" prefHeight="25.0" prefWidth="265.0" progress="0.0" />
+      <TextField fx:id="TxtExit" layoutX="67.0" layoutY="171.0" prefHeight="25.0" prefWidth="230.0" />
+      <Button fx:id="BtConvert" layoutX="67.0" layoutY="209.0" mnemonicParsing="false" onAction="#Iniciar" text="Converter" />
+      <ProgressBar fx:id="ProgressBarConvert" layoutX="165.0" layoutY="256.0" prefHeight="25.0" prefWidth="265.0" progress="0.0" />
       <Label layoutX="67.0" layoutY="59.0" text="Selecione um arquivo CSV" />
-      <Label layoutX="67.0" layoutY="180.0" text="Selecione uma pasta " />
+      <Label layoutX="67.0" layoutY="138.0" text="Selecione uma pasta " />
       <TextArea fx:id="TxtArea" layoutX="37.0" layoutY="340.0" prefHeight="235.0" prefWidth="432.0" />
+      <Label layoutX="67.0" layoutY="260.0" text="Conversão:" />
+      <Label layoutX="67.0" layoutY="292.0" text="Escrita:" />
+      <ProgressBar fx:id="ProgressBarWrite" layoutX="165.0" layoutY="291.0" prefHeight="25.0" prefWidth="265.0" progress="0.0" />
    </children>
 </AnchorPane>

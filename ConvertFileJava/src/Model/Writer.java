@@ -5,8 +5,32 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import javafx.concurrent.Task;
+import javafx.fxml.FXML;
+import javafx.scene.control.ProgressBar;
+
 
 public class Writer implements Runnable{
+	
+	@FXML
+	private ProgressBar ProgresBarWrite;
+	
+	Task task = new Task<Void>() {
+		@Override
+		public Void call() {
+			final int max = 100000000;
+			int centena = 0;
+			for (int i = 1; i <= max; i++) {
+				if (isCancelled()) {
+					break;
+				}
+				updateProgress(i, max);
+
+				
+			}
+			return null;
+		}
+    };
 
 	FileWriter write;
 	public Writer(FileWriter wf) {
@@ -21,12 +45,14 @@ public class Writer implements Runnable{
 
 		System.out.println("Escrevendo " + getHora());
 		do {
-
+			
 			String tarefa = ControllerQueue.getTarefaEscrever();
 
 			if (tarefa != null) {
 				try {
 					write.write(tarefa+ "\n");
+					//ProgresBarWrite.progressProperty().bind(task.progressProperty());
+		    		//new Thread(task).start();
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
