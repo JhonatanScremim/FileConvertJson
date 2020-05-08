@@ -1,16 +1,23 @@
 package Model;
 
+import java.awt.TextArea;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import com.google.gson.Gson;
 
+import javafx.fxml.FXML;
+
 
 public class Parse implements Runnable{
+	
+	@FXML
+	private TextArea TxtArea;
 	
 	@Override
 	public void run() {
 		System.out.println("Começar conversão " + getHora());
+		TxtArea.setText("Começar conversão " + getHora());
 		do {
 
 			String[] tarefa = ControllerQueue.getTarefa();
@@ -26,6 +33,7 @@ public class Parse implements Runnable{
 		} while (ControllerQueue.Acabou());
 		ControllerQueue.setFinalizarConvert(false);
 		System.out.println("Conversão finalizada " + getHora());
+		TxtArea.setText("Conversão finalizada " + getHora());
 	}
 	private String getHora() {
 		return new SimpleDateFormat("HH:mm:ss.SSS z").format(new Date(System.currentTimeMillis()));

@@ -1,5 +1,6 @@
 package application;
 
+import java.awt.TextArea;
 import java.io.BufferedReader;
 
 import java.io.File;
@@ -25,7 +26,9 @@ import com.opencsv.CSVReaderBuilder;
 import Model.ControllerQueue;
 import Model.Parse;
 import Model.Writer;
-
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
@@ -42,6 +45,9 @@ public class ControllerMain {
 		@FXML
 		private TextField TxtCsv;
 
+		@FXML
+		private TextArea TxtArea;
+		
 	    @FXML
 	    private Button BtCsv;
 	    
@@ -138,13 +144,36 @@ public class ControllerMain {
 	    		List<String[]> lines = csvReader.readAll();
 	    		ProgressBarConvert.setProgress(-1);
 
+	    		ProgressBarConvert.progressProperty().bind(task.progressProperty());
+	    		new Thread(task).start();
 	    	    Exec.execute(new ControllerQueue(lines, ProgressBarConvert));
 	    	    Exec.execute(new Parse());
 	    	    Exec.execute(new Writer(new FileWriter(TxtExit.getText() + "\\arquivo.json")));
+	    	    
+	    		
 	    	} catch (IOException e) {
 				e.printStackTrace();
 			}
 	    }
+	    Task task = new Task<Void>() {
+			@Override
+			public Void call() {
+				final int max = 100000000;
+				int centena = 0;
+				for (int i = 1; i <= max; i++) {
+					if (isCancelled()) {
+						break;
+					}
+					updateProgress(i, max);
+
+					if (i % 100 == 0) {
+						updateMessage("Processados: " + ++centena);
+					}
+				}
+				return null;
+			}
+	    };
+	    
 	    
 	    public String ConverterArquivo(JsonArray dados) {
 	    	Gson gson = new GsonBuilder().setPrettyPrinting().serializeNulls().setFieldNamingPolicy(FieldNamingPolicy.UPPER_CAMEL_CASE).create();
