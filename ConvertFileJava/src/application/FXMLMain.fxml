@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ProgressBar?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="600.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.ControllerMain">
+   <children>
+      <Button fx:id="BtCsv" layoutX="341.0" layoutY="188.0" mnemonicParsing="false" onAction="#Iniciar" text="Buscar" />
+      <Button fx:id="BtExit" layoutX="341.0" layoutY="301.0" mnemonicParsing="false" onAction="#Iniciar" text="Buscar" />
+      <TextField fx:id="TxtCsv" layoutX="66.0" layoutY="188.0" prefHeight="25.0" prefWidth="230.0" />
+      <TextField fx:id="TxtExit" layoutX="66.0" layoutY="301.0" prefHeight="25.0" prefWidth="230.0" />
+      <Button fx:id="BtConvert" layoutX="66.0" layoutY="363.0" mnemonicParsing="false" onAction="#Iniciar" text="Converter" />
+      <ProgressBar fx:id="ProgressBarConvert" layoutX="168.0" layoutY="360.0" prefHeight="25.0" prefWidth="265.0" progress="0.0" />
+      <Label layoutX="66.0" layoutY="147.0" text="Selecione um arquivo CSV" />
+      <Label layoutX="66.0" layoutY="268.0" text="Selecione uma pasta " />
+   </children>
+</AnchorPane>
