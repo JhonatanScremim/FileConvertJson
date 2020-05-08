@@ -62,8 +62,6 @@ public class ControllerMain {
 	    @FXML
 	    private ProgressBar ProgressBarConvert;
 	    
-	    @FXML
-	    private ProgressBar ProgressBarWrite;
 
 	    @FXML
 	    private Button BtConvert;
@@ -98,6 +96,7 @@ public class ControllerMain {
 	    
 	    public JsonArray LerArquivo(String arquivo) {
 	    	JsonArray resultado = new JsonArray();
+	    	TxtArea.appendText("Começar a leitura: " + getHora());
 	    	
 	    	try (BufferedReader leitor = new BufferedReader(new FileReader(arquivo))) {
 	    		
@@ -148,11 +147,10 @@ public class ControllerMain {
 	    		
 	    		List<String[]> lines = csvReader.readAll();
 
-	    		
 	    	    Exec.execute(new ControllerQueue(lines, ProgressBarConvert));
+	    	    TxtArea.appendText("Começou a conversão: " + getHora());
 	    	    Exec.execute(new Parse());
-	    	    ProgressBarConvert.progressProperty().bind(task.progressProperty());
-	    		new Thread(task).start();
+	    	    
 	    	    Exec.execute(new Writer(new FileWriter(TxtExit.getText() + "\\arquivo.json")));
 	    	    
 	    		
@@ -163,21 +161,6 @@ public class ControllerMain {
 	    private String getHora() {
 			return new SimpleDateFormat("HH:mm:ss.SSS z").format(new Date(System.currentTimeMillis()));
 		}
-	    Task task = new Task<Void>() {
-			@Override
-			public Void call() {
-				final int max = 100000000;
-				for (int i = 1; i <= max; i++) {
-					if (isCancelled()) {
-						break;
-					}
-					updateProgress(i, max);
-
-					
-				}
-				return null;
-			}
-	    };
 	    
 	    
 	    public String ConverterArquivo(JsonArray dados) {
@@ -185,25 +168,7 @@ public class ControllerMain {
 	    	return gson.toJson(dados);
 	    }
 	    
-	    public Boolean SalvarArquivo(String conteudo, String NomeArquivo) {
-	    	try {
-	    		TxtArea.appendText("Começar a salvar");
-	    		FileWriter escrever = new FileWriter(NomeArquivo);
-	    		escrever.write(conteudo);
-	    		escrever.close();
-	    		TxtArea.appendText("Salvado com sucesso " + getHora());
-	    		return true;
-	    		
-	    	} catch (IOException e) {
-	    		Alert error = new Alert(Alert.AlertType.ERROR);
-	            error.setHeaderText("Erro");
-	    		error.setContentText("Erro ao salvar o arquivo!");
-	    		error.showAndWait();
-	    		return false;
-		    }
-	    	
-	    	
-	    }
+	   
 	    @FXML 
 	    public void Iniciar() {
 	    	comecou = true;

@@ -8,10 +8,15 @@ import java.util.Vector;
 
 
 import javafx.application.Platform;
+import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.scene.control.ProgressBar;
+import javafx.scene.control.TextArea;
 
 public class ControllerQueue implements Runnable{
+	
+	@FXML
+	private static TextArea TxtArea;
 	
 	private List<String[]> ArquivoString;
 	private static boolean FinalizarLeitura = true;
@@ -25,11 +30,7 @@ public class ControllerQueue implements Runnable{
 	
 	
 	public static void FinalizarTudo() {
-		Platform.runLater(new Runnable() {
-            @Override public void run() {
-            	
-            }
-        });
+		TxtArea.appendText("Conversão finalizada: " + getHora());
 	}
 	public static void setFinalizarConvert(boolean convert) {
 		FinalizarConversao = convert;
@@ -38,12 +39,29 @@ public class ControllerQueue implements Runnable{
 	public static boolean getFinalizarConvert() {
 		return FinalizarConversao;
 	}
-	
+	Task task = new Task<Void>() {
+		@Override
+		public Void call() {
+			final int max = 100000000;
+			                
+			for (int i = 1; i <= max; i++) {
+				if (isCancelled()) {
+					break;
+				}
+				updateProgress(i, max);
+
+				
+			}
+			return null;
+		}
+    };
 	public ControllerQueue(List<String[]> file, ProgressBar pgBar) {
 		FilaParse = new Vector<String[]>();
 		FilaWrite = new Vector<String>();
 		this.ArquivoString = file;
-		ControllerQueue.ProgressBarConvert = pgBar;
+		pgBar.progressProperty().bind(task.progressProperty());
+		new Thread(task).start();
+		
 	}
 	
 	private void AddTarefa(String[] task) {
@@ -107,7 +125,7 @@ public class ControllerQueue implements Runnable{
 	public void run() {
 		ReceberDados();
 	}
-	private String getHora() {
+	private static String getHora() {
 		return new SimpleDateFormat("HH:mm:ss.SSS z").format(new Date(System.currentTimeMillis()));
 	}
 

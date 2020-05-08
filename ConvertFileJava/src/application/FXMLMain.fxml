@@ -19,7 +19,5 @@
       <Label layoutX="67.0" layoutY="138.0" text="Selecione uma pasta " />
       <TextArea fx:id="TxtArea" layoutX="37.0" layoutY="340.0" prefHeight="235.0" prefWidth="432.0" />
       <Label layoutX="67.0" layoutY="260.0" text="Conversão:" />
-      <Label layoutX="67.0" layoutY="292.0" text="Escrita:" />
-      <ProgressBar fx:id="ProgressBarWrite" layoutX="165.0" layoutY="291.0" prefHeight="25.0" prefWidth="265.0" progress="0.0" />
    </children>
 </AnchorPane>

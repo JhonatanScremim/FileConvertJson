@@ -12,25 +12,7 @@ import javafx.scene.control.ProgressBar;
 
 public class Writer implements Runnable{
 	
-	@FXML
-	private ProgressBar ProgresBarWrite;
 	
-	Task task = new Task<Void>() {
-		@Override
-		public Void call() {
-			final int max = 100000000;
-			int centena = 0;
-			for (int i = 1; i <= max; i++) {
-				if (isCancelled()) {
-					break;
-				}
-				updateProgress(i, max);
-
-				
-			}
-			return null;
-		}
-    };
 
 	FileWriter write;
 	public Writer(FileWriter wf) {
@@ -52,8 +34,7 @@ public class Writer implements Runnable{
 			if (tarefa != null) {
 				try {
 					write.write(tarefa+ "\n");
-					//ProgresBarWrite.progressProperty().bind(task.progressProperty());
-		    		//new Thread(task).start();
+					
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
@@ -66,7 +47,7 @@ public class Writer implements Runnable{
 			e.printStackTrace();
 		}
 		
-		ControllerQueue.FinalizarTudo();
+		
 		System.out.println("Escrita finalizada " + getHora());
 		long finish = System.currentTimeMillis();
 		System.out.printf("Tempo de escrição: " + "%.3f ms%n", (finish - start) / 1000d);
